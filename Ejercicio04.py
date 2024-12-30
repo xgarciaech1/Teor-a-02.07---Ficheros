@@ -33,5 +33,5 @@ def contar_palabras(url):
         contenido = f.read()
         return len(contenido.split())
 
-print(contar_palabras('https://www.gutenberg.org/files/2000/2000-0.txt'))
+print(contar_palabras('hhttp://textfiles.com/adventure/aencounter.txt'))
 print(contar_palabras('https://no-existe.txt'))
