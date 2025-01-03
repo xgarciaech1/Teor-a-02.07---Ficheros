@@ -66,7 +66,7 @@ def pib(pibs, pais="ES"):
 
 # Ejecución del programa
 url = "https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/sdg_08_10.tsv.gz&unzip=true"
-pibs = parsear_pib(url
+pibs = parsear_pib(url)
 if pibs:
     pais = input("Introduce el código de un país: ")
     print(f"Producto Interior Bruto per cápita de {pais}")
