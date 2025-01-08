@@ -98,7 +98,7 @@ def fichero():
             telefono = input('Ecribe el telefono que quieras añadir: ')
             print(añadir_cliente(nom_tel, nombre, telefono))
         elif opcion == '3':
-            nombre = input('Escribe el telefono que quieras quitar: ')
+            nombre = input('Escribe el nombre que quieras quitar: ')
             print(quitar_telefono(nom_tel, nombre))
         elif opcion == '4':
             print(fichero(nom_tel))
