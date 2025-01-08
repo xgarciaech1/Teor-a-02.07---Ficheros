@@ -9,7 +9,7 @@ def nota(cifra):
         cifra = cifra.replace(',', '.')
         return float(cifra)
     except ValueError:
-        return 0.0  # Si no se puede convertir la cifra, devolvemos 0
+        return 0.0  
 
 
 def calificaciones(ruta):
@@ -21,7 +21,6 @@ def calificaciones(ruta):
         Una lista de diccionarios donde cada diccionario contiene los datos de una linea del fichero (a excepción de la primera línea), usando como claves los datos de la primera línea.
     '''
     try:
-        # Abrimos el fichero en modo lectura de manera segura
         with open(ruta, 'r') as f:
             lineas = f.readlines()
     except FileNotFoundError:
@@ -31,21 +30,16 @@ def calificaciones(ruta):
     if not lineas:
         return []
 
-    # Leemos las claves del primer elemento de la lista, eliminamos el cambio de línea y dividimos la cadena por el punto y coma.
     claves = lineas[0].strip().split(";")
     calificaciones = []
 
-    # Recorremos las líneas del fichero (empezamos desde la segunda línea)
     for i in lineas[1:]:
-        # Eliminamos el cambio de línea del final y dividimos la cadena por el punto y coma.
         valores = i.strip().split(";")
         
-        # Verificar que el número de valores coincida con el número de claves
         if len(valores) != len(claves):
             print(f'Error en la línea: {i}. El número de valores no coincide con las claves.')
             continue
         
-        # Creamos el diccionario para la línea actual
         alumno = {claves[j]: valores[j] for j in range(len(valores))}
         calificaciones.append(alumno)
     
@@ -71,7 +65,6 @@ def añadir_nota_final(calificaciones):
         parcial2 = nota(alumno.get('Ordinario2', '')) if alumno.get('Ordinario2') else nota(alumno.get('Parcial2', ''))
         practicas = nota(alumno.get('OrdinarioPracticas', '')) if alumno.get('OrdinarioPracticas') else nota(alumno.get('Practicas', ''))
 
-        # Asignamos las notas calculadas al alumno
         alumno['Final1'] = parcial1
         alumno['Final2'] = parcial2
         alumno['FinalPracticas'] = practicas
@@ -79,7 +72,6 @@ def añadir_nota_final(calificaciones):
         
         return alumno
 
-    # Aplicamos la función nota_final a todos los alumnos
     return [nota_final(alumno) for alumno in calificaciones]
 
 
@@ -95,13 +87,11 @@ def aprobados_suspensos(calificaciones):
     suspensos = []
 
     for alumno in calificaciones:
-        # Validación de la asistencia como porcentaje
         try:
             asistencia = int(alumno['Asistencia'].replace('%', '').strip())
         except ValueError:
-            asistencia = 0  # Si no se puede convertir, asumimos que no cumplió con la asistencia mínima
+            asistencia = 0 
 
-        # Condición para aprobar
         if (asistencia >= 75 and alumno['Final1'] >= 4 and alumno['Final2'] >= 4 and 
             alumno['FinalPracticas'] >= 4 and alumno['NotaFinal'] >= 5):
             aprobados.append(f"{alumno['Apellidos']}, {alumno['Nombre']}")
@@ -111,7 +101,6 @@ def aprobados_suspensos(calificaciones):
     return aprobados, suspensos
 
 
-# Llamada a las funciones de prueba
 califs = calificaciones('calificaciones.csv')
 califs_con_nota_final = añadir_nota_final(califs)
 print(califs_con_nota_final)
